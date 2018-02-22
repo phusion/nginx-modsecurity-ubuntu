@@ -2,7 +2,7 @@ PACKAGE_NAME = libnginx-mod-http-modsecurity
 PACKAGE_VERSION = 1.0.0
 PACKAGE_REVISION = 1
 MODSECURITY_REF = 2b052b0edb38b5a7
-NGINX_VERSION = 1.10.3
+NGINX_VERSION = 1.12.1
 DPKG_BUILDPACKAGE_ARGS =
 
 .PHONY: all source-package binary-package test clean

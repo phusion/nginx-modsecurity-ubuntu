@@ -25,8 +25,11 @@ override_dh_auto_build:
 	make -C nginx -f objs/Makefile modules
 
 override_dh_auto_install:
-	mkdir -p debian/libnginx-mod-http-modsecurity/usr/lib/nginx/modules/
+	mkdir -p debian/libnginx-mod-http-modsecurity/usr/lib/nginx/modules
+	mkdir -p debian/libnginx-mod-http-modsecurity/etc/nginx/modules-enabled
 	cp nginx/objs/ngx_http_modsecurity_module.so debian/libnginx-mod-http-modsecurity/usr/lib/nginx/modules/
+	ln -sf /usr/share/nginx/modules-available/libnginx-mod-http-modsecurity.conf \
+		debian/libnginx-mod-http-modsecurity/etc/nginx/modules-enabled/50-mod-http-modsecurity.conf
 
 override_dh_auto_clean:
 	test -e Makefile && make clean || true
