@@ -9,9 +9,9 @@ DPKG_BUILDPACKAGE_ARGS =
 
 all: binary-package
 
-source-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
-
 binary-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).deb
+
+source-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 
 test: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	rm -rf ModSecurity-nginx-$(PACKAGE_VERSION)/debian
@@ -29,7 +29,7 @@ $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PA
 	cd ModSecurity-nginx-$(PACKAGE_VERSION) && dpkg-buildpackage -S -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).deb: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
-	cd ModSecurity-nginx_$(PACKAGE_VERSION) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd ModSecurity-nginx-$(PACKAGE_VERSION) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz: ModSecurity-nginx-$(PACKAGE_VERSION).tar.gz nginx-$(NGINX_VERSION).tar.gz ModSecurity.git/HEAD
