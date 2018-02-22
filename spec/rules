@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	cd ModSecurity && ./build.sh
+	cd ModSecurity && ./configure --disable-shared --disable-examples CFLAGS='-O2 -fPIC' CXXFLAGS='-O2 -fPIC'
+	cd ModSecurity/others && make
+	cd ModSecurity/src && make
+	cd nginx && \
+		env MODSECURITY_INC=../ModSecurity/headers \
+		MODSECURITY_LIB=../ModSecurity/src/.libs \
+		./configure --with-pcre-jit --with-threads --with-ipv6 \
+		--with-http_gzip_static_module --with-http_gunzip_module \
+		--with-http_v2_module --with-http_dav_module \
+		--with-http_realip_module --with-http_geoip_module=dynamic \
+		--with-http_ssl_module --http-proxy-temp-path=/var/lib/nginx/proxy \
+		--with-cc-opt="$$(pkg-config --cflags libxml-2.0 geoip yajl libpcre libcurl apr-1) -I$$(apxs2 -q INCLUDEDIR) -Wno-error" \
+		--with-ld-opt="$$(pkg-config --libs libxml-2.0 geoip yajl libpcre libcurl apr-1)" \
+		--add-dynamic-module="$$(pwd)/.."
+	echo '#define NGX_HTTP_HEADERS 1' >> nginx/objs/ngx_auto_config.h
+
+override_dh_auto_build:
+	make -C nginx -f objs/Makefile modules
+
+override_dh_auto_install:
+	mkdir -p debian/libnginx-mod-http-modsecurity/usr/lib/nginx/modules/
+	cp nginx/objs/ngx_http_modsecurity_module.so debian/libnginx-mod-http-modsecurity/usr/lib/nginx/modules/
+
+override_dh_auto_clean:
+	test -e Makefile && make clean || true
+	test -e ModSecurity/Makefile && make -C ModSecurity clean || true
+	test -e nginx/Makefile && make -C nginx clean || true
+	rm -f ModSecurity/modsecurity

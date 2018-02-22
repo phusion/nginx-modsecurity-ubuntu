@@ -1,0 +1,10 @@
+.DS_Store
+/*.dsc
+/*.deb
+/*.ddeb
+/*.tar.gz
+/*.tar.xz
+/*.buildinfo
+/*.changes
+/*.git
+/ModSecurity-nginx-*

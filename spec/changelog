@@ -1,0 +1,5 @@
+libnginx-mod-http-modsecurity (1.0.0-1) stretch; urgency=medium
+
+  * Initial release.
+
+ -- Hongli Lai <hongli@phusion.nl>  Wed, 21 Feb 2018 13:59:26 +0000

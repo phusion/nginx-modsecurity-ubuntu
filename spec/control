@@ -1,0 +1,27 @@
+Source: libnginx-mod-http-modsecurity
+Section: httpd
+Priority: optional
+Maintainer: Hongli Lai <hongli@phusion.nl>
+Uploaders: Hongli Lai <hongli@phusion.nl>
+Build-Depends: debhelper (>= 9), autoconf, automake, apache2-dev,
+ libpcre3-dev, libxml2-dev, pkg-config, libyajl-dev, zlib1g-dev,
+ libcurl4-openssl-dev, libgeoip-dev, libssl-dev
+Standards-Version: 3.9.5
+
+Package: libnginx-mod-http-modsecurity
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, nginx-common (= 1.10.3)
+Recommends: modsecurity-crs
+Description: Tighten web applications security for Nginx
+ Modsecurity is an Nginx module whose purpose is to tighten the Web
+ application security. Effectively, it is an intrusion detection and prevention
+ system for the web server. 
+ .
+ At the moment its main features are:
+   * Audit log; store full request details in a separate file, including POST 
+     payloads.
+   * Request filtering; incoming requests can be analysed and offensive requests
+     can be rejected (or simply logged, if that is what you want). This feature 
+     can be used to prevent many types of attacks (e.g. XSS attacks, SQL 
+     injection, ...) and even allow you to run insecure applications on your 
+     servers (if you have no other choice, of course).
