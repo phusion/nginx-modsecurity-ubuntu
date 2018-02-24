@@ -4,13 +4,13 @@
 	dh $@
 
 override_dh_auto_configure:
-	cd ModSecurity && ./build.sh
-	cd ModSecurity && ./configure --disable-shared --disable-examples CFLAGS='-O2 -fPIC' CXXFLAGS='-O2 -fPIC'
-	cd ModSecurity/others && make
-	cd ModSecurity/src && make
+	cd libmodsecurity && ./build.sh
+	cd libmodsecurity && ./configure --disable-shared --disable-examples CFLAGS='-O2 -fPIC' CXXFLAGS='-O2 -fPIC'
+	cd libmodsecurity/others && make
+	cd libmodsecurity/src && make
 	cd nginx && \
-		env MODSECURITY_INC=../ModSecurity/headers \
-		MODSECURITY_LIB=../ModSecurity/src/.libs \
+		env MODSECURITY_INC=../libmodsecurity/headers \
+		MODSECURITY_LIB=../libmodsecurity/src/.libs \
 		./configure --with-pcre-jit --with-threads --with-ipv6 \
 		--with-http_gzip_static_module --with-http_gunzip_module \
 		--with-http_v2_module --with-http_dav_module \
@@ -33,6 +33,5 @@ override_dh_auto_install:
 
 override_dh_auto_clean:
 	test -e Makefile && make clean || true
-	test -e ModSecurity/Makefile && make -C ModSecurity clean || true
+	test -e libmodsecurity/Makefile && make -C libmodsecurity clean || true
 	test -e nginx/Makefile && make -C nginx clean || true
-	rm -f ModSecurity/modsecurity

@@ -1,0 +1,19 @@
+# http://EditorConfig.org
+
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+
+[*.sh]
+indent_style=tab
+trim_trailing_whitespace = true
+
+[Makefile]
+indent_style=tab
+trim_trailing_whitespace = true
+
+[spec/rules]
+indent_style=tab
+trim_trailing_whitespace = true
