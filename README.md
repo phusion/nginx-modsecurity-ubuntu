@@ -95,4 +95,4 @@ Nginx dynamic modules are only compatible against the *exact same* Nginx version
  1. Open the Makefile and either reset `PACKAGE_REVISION` to 1 or bump or by 1. See the comments for instructions.
  2. Edit spec/changelog and add a new changelog entry. You *must* do this because the Debian packaging tools extract the version number from the changelog file. The changelog entry's version number must correspond to the value of `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as specified in the Makefile.
  3. Rebuild the package from scratch: `make clean && make`
- 4. Upload the package to your favorite APT repository.
+ 4. Upload the package to your favorite APT repository. For example, to upload to the Phusion PPA: `dput ppa:phusion.nl/misc *source.changes`
