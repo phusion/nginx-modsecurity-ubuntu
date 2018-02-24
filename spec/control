@@ -5,7 +5,7 @@ Maintainer: Hongli Lai <hongli@phusion.nl>
 Uploaders: Hongli Lai <hongli@phusion.nl>
 Build-Depends: debhelper (>= 9), autoconf, automake, apache2-dev,
  libpcre3-dev, libxml2-dev, pkg-config, libyajl-dev, zlib1g-dev,
- libcurl4-openssl-dev, libgeoip-dev, libssl-dev
+ libcurl4-openssl-dev, libgeoip-dev, libssl-dev, quilt
 Standards-Version: 3.9.8.0
 
 Package: libnginx-mod-http-modsecurity
