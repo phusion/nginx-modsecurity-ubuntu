@@ -1,0 +1,11 @@
+--- ModSecurity-nginx-1.0.0/config.orig	2018-02-24 02:10:54.000000000 +0000
++++ ModSecurity-nginx-1.0.0/config	2018-02-24 09:00:43.000000000 +0000
+@@ -36,7 +36,7 @@
+     elif [ "$NGX_IGNORE_RPATH" != "YES" -a $NGX_SYSTEM = "Linux" ]; then
+         ngx_feature_libs="-Wl,-rpath,$MODSECURITY_LIB -L$MODSECURITY_LIB -lmodsecurity $YAJL_EXTRA"
+     else
+-        ngx_feature_libs="-L$MODSECURITY_LIB -lmodsecurity $YAJL_EXTRA"
++        ngx_feature_libs="-L$MODSECURITY_LIB -lmodsecurity $YAJL_EXTRA $(pkg-config --libs libxml-2.0 geoip yajl libpcre libcurl apr-1) -lstdc++"
+     fi
+ 
+     . auto/feature

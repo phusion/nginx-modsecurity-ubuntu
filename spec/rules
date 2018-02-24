@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 
 %:
-	dh $@
+	dh $@ --with quilt
 
 override_dh_auto_configure:
 	cd libmodsecurity && ./build.sh
@@ -11,13 +11,13 @@ override_dh_auto_configure:
 	cd nginx && \
 		env MODSECURITY_INC=../libmodsecurity/headers \
 		MODSECURITY_LIB=../libmodsecurity/src/.libs \
+		NGX_IGNORE_RPATH=YES \
 		./configure --with-pcre-jit --with-threads --with-ipv6 \
 		--with-http_gzip_static_module --with-http_gunzip_module \
 		--with-http_v2_module --with-http_dav_module \
 		--with-http_realip_module --with-http_geoip_module=dynamic \
 		--with-http_ssl_module --http-proxy-temp-path=/var/lib/nginx/proxy \
 		--with-cc-opt="$$(pkg-config --cflags libxml-2.0 geoip yajl libpcre libcurl apr-1) -I$$(apxs2 -q INCLUDEDIR) -Wno-error" \
-		--with-ld-opt="$$(pkg-config --libs libxml-2.0 geoip yajl libpcre libcurl apr-1)" \
 		--add-dynamic-module="$$(pwd)/.."
 	echo '#define NGX_HTTP_HEADERS 1' >> nginx/objs/ngx_auto_config.h
 
