@@ -6,6 +6,7 @@ This project contains the packaging specifications of [the ModSecurity Nginx mod
 
 <!-- MarkdownTOC depth=3 autolink="true" bracket="round" -->
 
+- [Installation through PPA](#installation-through-ppa)
 - [Building the package](#building-the-package)
 	- [On Ubuntu 18.04](#on-ubuntu-1804)
 	- [On other Linux distros, other Ubuntu versions or other OSes](#on-other-linux-distros-other-ubuntu-versions-or-other-oses)
@@ -19,6 +20,16 @@ This project contains the packaging specifications of [the ModSecurity Nginx mod
 	- [Releasing a package update](#releasing-a-package-update)
 
 <!-- /MarkdownTOC -->
+
+## Installation through PPA
+
+A prebuilt package is available through [the phusion.nl/misc PPA](https://launchpad.net/~phusion.nl/+archive/ubuntu/misc).
+
+~~~
+sudo add-apt-repository ppa:phusion.nl/misc
+sudo apt update
+sudo apt install libnginx-mod-http-modsecurity
+~~~
 
 ## Building the package
 
