@@ -72,7 +72,7 @@ The development workflow involves the use of `make`. You do not have to use Debi
 `make dev` performs the following actions:
 
  * It downloads the ModSecurity-nginx, libmodsecurity and Nginx sources and bundle them together into a single Debian-packaging-style orig tarball. This is only done once.
- * It extracts the orig tarball into ModSecurity-nginx-x.x.x and copies the spec/ directory into ModSecurity-nginx/x.x.x/debian/.
+ * It extracts the orig tarball into ModSecurity-nginx-x.x.x and copies the spec/ directory into ModSecurity-nginx-x.x.x/debian/.
  * It runs `dpkg-buildpackage` on the ModSecurity-nginx-x.x.x directory in order to build the .deb package.
 
 ### Shortening the development cycle
