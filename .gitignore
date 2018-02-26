@@ -6,5 +6,6 @@
 /*.tar.xz
 /*.buildinfo
 /*.changes
+/*.upload
 /*.git
 /ModSecurity-nginx-*

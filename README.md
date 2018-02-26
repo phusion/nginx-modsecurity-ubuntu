@@ -95,4 +95,18 @@ Nginx dynamic modules are only compatible against the *exact same* Nginx version
  1. Open the Makefile and either reset `PACKAGE_REVISION` to 1 or bump or by 1. See the comments for instructions.
  2. Edit spec/changelog and add a new changelog entry. You *must* do this because the Debian packaging tools extract the version number from the changelog file. The changelog entry's version number must correspond to the value of `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as specified in the Makefile.
  3. Rebuild the package from scratch: `make clean && make`
- 4. Upload the package to your favorite APT repository. For example, to upload to the Phusion PPA: `dput ppa:phusion.nl/misc *source.changes`
+
+You are then ready to upload the package to your preferred APT repository. The exact instructions depends on your repository. Here are instructions for uploading to the Phusion PPA on Launchpad:
+
+ 1. If using Docker, import your GPG private key into the Docker container:
+
+     a. On your host OS, export your GPG private key to a file, located inside the same directory as enter-docker.sh.
+     b. Inside the container, run: `gpg --import yourkeyfile.asc`
+     c. Inside the container, run: `gpg --edit-key yourkeyemail@host.com`
+     d. Inside the GPG prompt, run: `trust`. Select "ultimate". Then run: `quit`.
+
+ 2. Sign the source package: `debsign *source.changes`
+
+ 3. Upload to the Phusion PPA using dput: `dput ppa:phusion.nl/misc *source.changes`
+
+ 4. If using Docker, delete the private key file that you exported in step 1.

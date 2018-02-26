@@ -17,6 +17,11 @@ addgroup --gid 1000 app
 adduser --uid 1000 --gid 1000 --disabled-password app
 usermod -L app
 
+mkdir /home/app/.gnupg
+cp /nginx_modsecurity_build/gpg.conf /home/app/.gnupg/gpg.conf
+chown -R app: /home/app/.gnupg
+chmod 700 /home/app/.gnupg
+
 cp /nginx_modsecurity_build/inithostmount.sh /sbin/inithostmount
 cp /nginx_modsecurity_build/initenv.sh /sbin/initenv
 

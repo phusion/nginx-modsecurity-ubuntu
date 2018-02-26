@@ -42,7 +42,7 @@ dev: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	cd ModSecurity-nginx-$(PACKAGE_VERSION) && eatmydata dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 clean:
-	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb ModSecurity-nginx-*
+	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb *.upload ModSecurity-nginx-*
 
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
