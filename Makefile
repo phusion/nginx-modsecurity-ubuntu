@@ -24,7 +24,14 @@ NGINX_VERSION = 1.12.1
 #
 # Otherwise (e.g. you only bumped LIBMODSECURITY_REF/NGINX_VERSION, or
 # you made other changes to the package), then bump this number by 1.
-PACKAGE_REVISION = 1
+#
+# Only modify the number before the `~` part. Don't touch the text after
+# the `~` part. For example, if you want to bump `1~bionic1` then
+# change it to `2~bionic1`.
+#
+# Also, be sure to edit spec/control and add a changelog entry there
+# with `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as version number.
+PACKAGE_REVISION = 1~bionic1
 
 DPKG_BUILDPACKAGE_ARGS =
 
