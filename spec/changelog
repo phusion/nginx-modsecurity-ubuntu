@@ -1,4 +1,4 @@
-libnginx-mod-http-modsecurity (1.0.0-1) stretch; urgency=medium
+libnginx-mod-http-modsecurity (1.0.0-1) bionic; urgency=medium
 
   * Initial release.
 
