@@ -1,13 +1,13 @@
 # Ubuntu package for ModSecurity-Nginx
 
-This project contains the packaging specifications of [the ModSecurity Nginx module](https://github.com/SpiderLabs/ModSecurity-nginx) for Ubuntu 17.10. It packages ModSecurity-Nginx as a dynamic module.
+This project contains the packaging specifications of [the ModSecurity Nginx module](https://github.com/SpiderLabs/ModSecurity-nginx) for Ubuntu 18.04. It packages ModSecurity-Nginx as a dynamic module.
 
 **Table of contents:**
 
 <!-- MarkdownTOC depth=3 autolink="true" bracket="round" -->
 
 - [Building the package](#building-the-package)
-	- [On Ubuntu 17.10](#on-ubuntu-1710)
+	- [On Ubuntu 18.04](#on-ubuntu-1804)
 	- [On other Linux distros, other Ubuntu versions or other OSes](#on-other-linux-distros-other-ubuntu-versions-or-other-oses)
 - [Development](#development)
 	- [Anatomy](#anatomy)
@@ -22,9 +22,9 @@ This project contains the packaging specifications of [the ModSecurity Nginx mod
 
 ## Building the package
 
-You can build a package either on Ubuntu 17.10, or on any system that supports Docker Linux containers.
+You can build a package either on Ubuntu 18.04, or on any system that supports Docker Linux containers.
 
-### On Ubuntu 17.10
+### On Ubuntu 18.04
 
  1. Install Debian package building tools: `apt install devscripts eatmydata wget git`
  2. Run: `make`
@@ -35,14 +35,14 @@ If building fails then that is likely because you need to have some libraries in
 
 ### On other Linux distros, other Ubuntu versions or other OSes
 
- 1. Enter our Ubuntu 17.10 build environment Docker container: `./enter-docker.sh`
+ 1. Enter our Ubuntu 18.04 build environment Docker container: `./enter-docker.sh`
  2. Inside the container, run: `make`
 
 This will output a file `libnginx-mod-http-modsecurity_xxxx.deb`.
 
 ## Development
 
-This section describes how you should approach making changes to the packaging specifications. Just like when building a package, you can do development either on Ubuntu 17.10, or on any system that supports Docker Linux containers.
+This section describes how you should approach making changes to the packaging specifications. Just like when building a package, you can do development either on Ubuntu 18.04, or on any system that supports Docker Linux containers.
 
 ### Anatomy
 
