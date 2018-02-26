@@ -1,3 +1,3 @@
 #!/bin/bash
 set -e
-exec docker build --force-rm -t phusion/libnginx-mod-http-modsecurity-builder:latest docker-env
+exec docker build --force-rm -t phusion/nginx-modsecurity-ubuntu-builder:latest docker-env

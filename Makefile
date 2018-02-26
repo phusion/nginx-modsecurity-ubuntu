@@ -14,7 +14,7 @@ LIBMODSECURITY_REF = 2b052b0edb38b5a7
 # This must be the exact same version as the one installable via the
 # Ubuntu APT repository. You can use https://packages.ubuntu.com/
 # to find out which version that is.
-# 
+#
 # Don't forget to synchronize with the version numbers
 # in spec/control.
 NGINX_VERSION = 1.12.1
@@ -42,7 +42,7 @@ test: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	cd ModSecurity-nginx-$(PACKAGE_VERSION) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 clean:
-	rm -rf *.tar.gz *.git *.dsc *.buildinfo *.changes *.deb
+	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb ModSecurity-nginx-*
 
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz

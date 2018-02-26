@@ -4,6 +4,6 @@ set -e
 exec docker run -t -i --rm --init --privileged \
 	-e APP_UID="$(id -u)" \
 	-e APP_GID="$(id -g)" \
-	-v "$(pwd):/host.real" \
-	phusion/libnginx-mod-http-modsecurity-builder:latest \
+	-v "$(pwd):/host.real:delegated" \
+	phusion/nginx-modsecurity-ubuntu-builder:latest \
 	sudo -u app -H bash
