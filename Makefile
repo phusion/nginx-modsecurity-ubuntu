@@ -28,7 +28,7 @@ PACKAGE_REVISION = 1
 
 DPKG_BUILDPACKAGE_ARGS =
 
-.PHONY: all source-package binary-package test clean
+.PHONY: all source-package binary-package dev clean
 
 all: binary-package
 
@@ -36,7 +36,7 @@ binary-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).deb
 
 source-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 
-test: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
+dev: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	rm -rf ModSecurity-nginx-$(PACKAGE_VERSION)/debian
 	cp -dpR spec ModSecurity-nginx-$(PACKAGE_VERSION)/debian
 	cd ModSecurity-nginx-$(PACKAGE_VERSION) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)

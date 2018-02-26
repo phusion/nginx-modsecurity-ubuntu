@@ -55,10 +55,10 @@ This section describes how you should approach making changes to the packaging s
 The development workflow involves the use of `make`. You do not have to use Debian packaging tools (like dpkg-buildpackage) directly. Here is how a typical workflow looks like:
 
  1. Make changes in the Makefile or the `spec/` directory.
- 2. Run `make test`.
+ 2. Run `make dev`.
  3. Check whether the resulting .deb file is satisfactory. Go back to step 1 if not.
 
-`make test` performs the following actions:
+`make dev` performs the following actions:
 
  * It downloads the ModSecurity-nginx, libmodsecurity and Nginx sources and bundle them together into a single Debian-packaging-style orig tarball. This is only done once.
  * It extracts the orig tarball into ModSecurity-nginx-x.x.x and copies the spec/ directory into ModSecurity-nginx/x.x.x/debian/.
@@ -69,7 +69,7 @@ The development workflow involves the use of `make`. You do not have to use Debi
 `dpkg-buildpackage` can take quite a while, which is very annoying when you want to changes. There are two ways to make `dpkg-buildpackage` faster and thus shorten the development cycle:
 
  1. By using ccache.
- 2. By invoking Make with `DPKG_BUILDPACKAGE_ARGS=-nc`: `make test DPKG_BUILDPACKAGE_ARGS=-nc`
+ 2. By invoking Make with `DPKG_BUILDPACKAGE_ARGS=-nc`: `make dev DPKG_BUILDPACKAGE_ARGS=-nc`
 
 If you are using our Docker container, then ccache is already set up for you (though the ccache directory will be wiped when you exit the container).
 
