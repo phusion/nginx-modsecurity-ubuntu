@@ -26,7 +26,7 @@ You can build a package either on Ubuntu 17.10, or on any system that supports D
 
 ### On Ubuntu 17.10
 
- 1. Install Debian package building tools: `apt install devscripts wget git`
+ 1. Install Debian package building tools: `apt install devscripts eatmydata wget git`
  2. Run: `make`
 
 If building succeeds then this will output a file `libnginx-mod-http-modsecurity_xxxx.deb`.

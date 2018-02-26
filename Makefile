@@ -39,7 +39,7 @@ source-package: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 dev: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	rm -rf ModSecurity-nginx-$(PACKAGE_VERSION)/debian
 	cp -dpR spec ModSecurity-nginx-$(PACKAGE_VERSION)/debian
-	cd ModSecurity-nginx-$(PACKAGE_VERSION) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd ModSecurity-nginx-$(PACKAGE_VERSION) && eatmydata dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 clean:
 	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb ModSecurity-nginx-*
@@ -49,10 +49,10 @@ $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PA
 	test -e ModSecurity-nginx-$(PACKAGE_VERSION) || tar xzf $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
 	rm -rf ModSecurity-nginx-$(PACKAGE_VERSION)/debian
 	cp -dpR spec ModSecurity-nginx-$(PACKAGE_VERSION)/debian
-	cd ModSecurity-nginx-$(PACKAGE_VERSION) && dpkg-buildpackage -S -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd ModSecurity-nginx-$(PACKAGE_VERSION) && eatmydata dpkg-buildpackage -S -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).deb: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
-	cd ModSecurity-nginx-$(PACKAGE_VERSION) && dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
+	cd ModSecurity-nginx-$(PACKAGE_VERSION) && eatmydata dpkg-buildpackage -b -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz: ModSecurity-nginx-$(PACKAGE_VERSION).tar.gz nginx-$(NGINX_VERSION).tar.gz libmodsecurity.git/HEAD
