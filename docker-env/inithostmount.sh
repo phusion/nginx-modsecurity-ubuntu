@@ -12,12 +12,6 @@ bindfs -u app -g app \
 	--create-for-user="$APP_UID" --create-for-group="$APP_GID" \
 	--chown-ignore --chgrp-ignore \
 	/host.real /host
+
 cd /host
-
-export CCACHE_COMPRESS=1
-export CCACHE_COMPRESSLEVEL=3
-export PATH=/usr/lib/ccache:$PATH
-
-if [[ $# -gt 0 ]]; then
-	exec "$@"
-fi
+source /sbin/initenv

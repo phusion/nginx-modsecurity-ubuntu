@@ -3,9 +3,10 @@ set -ex
 
 apt-get update
 apt-get install -y devscripts gdebi-core mc sudo bindfs build-essential python \
-	git ccache debhelper autoconf automake apache2-dev \
+	ccache debhelper quilt eatmydata nano xz-utils wget git \
+	autoconf automake apache2-dev \
 	libpcre3-dev libxml2-dev pkg-config libyajl-dev zlib1g-dev \
-	libcurl4-openssl-dev libgeoip-dev libssl-dev xz-utils wget quilt
+	libcurl4-openssl-dev libgeoip-dev libssl-dev
 
 echo 'alias ls="ls --color -Fh"' >> /etc/bash.bashrc
 echo 'alias dir="ls -l"' >> /etc/bash.bashrc
@@ -17,6 +18,7 @@ adduser --uid 1000 --gid 1000 --disabled-password app
 usermod -L app
 
 cp /nginx_modsecurity_build/inithostmount.sh /sbin/inithostmount
+cp /nginx_modsecurity_build/initenv.sh /sbin/initenv
 
 rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 rm -rf /nginx_modsecurity_build
