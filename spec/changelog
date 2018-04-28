@@ -1,3 +1,9 @@
+libnginx-mod-http-modsecurity (1.0.1-1~bionic1) bionic; urgency=medium
+
+  * Upgrade to Nginx 1.14.0, same as what's shipped with Ubuntu 18.04 final.
+
+ -- Hongli Lai <hongli@phusion.nl>  Sat, 28 Apr 2018 11:14:26 +0000
+
 libnginx-mod-http-modsecurity (1.0.0-1~bionic1) bionic; urgency=medium
 
   * Initial release.

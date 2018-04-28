@@ -14,7 +14,7 @@ This project contains the packaging specifications of [the ModSecurity Nginx mod
 	- [Anatomy](#anatomy)
 	- [Workflow](#workflow)
 	- [Shortening the development cycle](#shortening-the-development-cycle)
-	- [Upgrading libmodsecurity and Nginx](#upgrading-libmodsecurity-and-nginx)
+	- [Upgrading modsecurity-nginx, libmodsecurity and Nginx](#upgrading-modsecurity-nginx-libmodsecurity-and-nginx)
 - [Maintenance and troubleshooting](#maintenance-and-troubleshooting)
 	- [When Ubuntu upgrades Nginx](#when-ubuntu-upgrades-nginx)
 	- [Releasing a package update](#releasing-a-package-update)
@@ -72,8 +72,8 @@ The development workflow involves the use of `make`. You do not have to use Debi
 `make dev` performs the following actions:
 
  * It downloads the ModSecurity-nginx, libmodsecurity and Nginx sources and bundle them together into a single Debian-packaging-style orig tarball. This is only done once.
- * It extracts the orig tarball into ModSecurity-nginx-x.x.x and copies the spec/ directory into ModSecurity-nginx-x.x.x/debian/.
- * It runs `dpkg-buildpackage` on the ModSecurity-nginx-x.x.x directory in order to build the .deb package.
+ * It extracts the orig tarball into libnginx-mod-http-modsecurity-x.x.x and copies the spec/ directory into libnginx-mod-http-modsecurity-x.x.x/debian/.
+ * It runs `dpkg-buildpackage` on the libnginx-mod-http-modsecurity-x.x.x directory in order to build the .deb package.
 
 ### Shortening the development cycle
 
@@ -86,11 +86,11 @@ If you are using our Docker container, then ccache is already set up for you (th
 
 With regard to `DPKG_BUILDPACKAGE_ARGS=-nc`: as you may know, by default `dpkg-buildpackage` cleans existing build products during the beginning of each invocation. If you did not make any changes to the compilation instructions then this means that all the source files are being recompiled on every `dpkg-buildpackage` invocation. Even though ccache makes recompilations faster, ideally you want to avoid recompiling at all. With `-nc`, you tell `dpkg-buildpackage` not to clean existing build products.
 
-### Upgrading libmodsecurity and Nginx
+### Upgrading modsecurity-nginx, libmodsecurity and Nginx
 
-To upgrade the version of libmodsecurity and the version of Nginx that we compile against, edit the version numbers in the Makefile. Specifically, modify `LIBMODSECURITY_REF` and `NGINX_VERSION`.
+To upgrade the version of modsecurity-nginx, libmodsecurity or the version of Nginx that we compile against, edit the version numbers in the Makefile. Specifically, modify `MODSECURITY_REF`, `LIBMODSECURITY_REF` org `NGINX_VERSION`.
 
-If you bump `NGINX_VERSION`, then don't forget to modify the corresponding nginx-common version specification `spec/control` as well.
+Be sure to follow the instructions in the comments. Modifying one variable often involves having to modify other variables/files as well.
 
 ## Maintenance and troubleshooting
 
@@ -98,13 +98,13 @@ If you bump `NGINX_VERSION`, then don't forget to modify the corresponding nginx
 
 Nginx dynamic modules are only compatible against the *exact same* Nginx version number. From time to time, Ubuntu may upgrade their Nginx package, which breaks compatibility with our ModSecurity-nginx package. When this happens, then you need to:
 
- 1. Upgrade the Nginx version that we compile against (see "Upgrading libmodsecurity and Nginx").
+ 1. Upgrade the Nginx version that we compile against (see "Upgrading modsecurity-nginx, libmodsecurity and Nginx").
  2. Release a package update (see "Releasing a package update").
 
 ### Releasing a package update
 
- 1. Open the Makefile and either reset `PACKAGE_REVISION` to 1 or bump or by 1. See the comments for instructions.
- 2. Edit spec/changelog and add a new changelog entry. You *must* do this because the Debian packaging tools extract the version number from the changelog file. The changelog entry's version number must correspond to the value of `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as specified in the Makefile.
+ 1. Open the Makefile and check whether you need to update `PACKAGE_VERSION` and `PACKAGE_REVISION`. See the comments for instructions.
+ 2. Edit spec/changelog and ensure that there is a changelog entry that matches `PACKAGE_VERSION` and `PACKAGE_REVISION`. You *must* do this because the Debian packaging tools extract the version number from the changelog file. The changelog entry's version number must correspond to the value of `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as specified in the Makefile.
  3. Rebuild the package from scratch: `make clean && make`
 
 You are then ready to upload the package to your preferred APT repository. The exact instructions depends on your repository. Here are instructions for uploading to the Phusion PPA on Launchpad:

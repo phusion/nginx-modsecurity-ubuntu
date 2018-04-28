@@ -8,4 +8,4 @@
 /*.changes
 /*.upload
 /*.git
-/ModSecurity-nginx-*
+/libnginx-mod-http-modsecurity-*

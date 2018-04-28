@@ -11,8 +11,8 @@ Standards-Version: 3.9.8.0
 Package: libnginx-mod-http-modsecurity
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
-  nginx-common (>= 1.12.1),
-  nginx-common (<< 1.12.2)
+  nginx-common (>= 1.14.0),
+  nginx-common (<< 1.14.1)
 Suggests: modsecurity-crs
 Description: Tighten web applications security for Nginx
  Modsecurity is an Nginx module whose purpose is to tighten the Web
