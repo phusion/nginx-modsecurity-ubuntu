@@ -4,7 +4,7 @@ This project contains the packaging specifications of [the ModSecurity Nginx mod
 
 **Table of contents:**
 
-<!-- MarkdownTOC depth=3 autolink="true" bracket="round" -->
+<!-- MarkdownTOC levels="1,2,3" autolink="true" bracket="round" -->
 
 - [Installation through PPA](#installation-through-ppa)
 - [Building the package](#building-the-package)
