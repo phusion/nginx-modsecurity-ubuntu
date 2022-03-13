@@ -1,13 +1,13 @@
 PACKAGE_NAME = libnginx-mod-http-modsecurity
 
-# The Debian package version. Every time MODSECURITY_REF, LIBMODSECURITY_REF,
+# The Debian package version. Every time NGINX_MODSECURITY_REF
 # or NGINX_VERSION changes, you must bump this number.
 #
 # When bumping this number, you MUST also:
 # - reset PACKAGE_REVISION.
 # - edit spec/control and add a changelog entry there with
 #   `$(PACKAGE_VERSION)-$(PACKAGE_REVISION)` as version number.
-PACKAGE_VERSION = 1.0.2
+PACKAGE_VERSION = 1.0.2-2
 
 # The version of ModSecurity-nginx you want to package. This must
 # correspond to a specific tag in the ModSecurity-nginx Git repository:
@@ -15,12 +15,6 @@ PACKAGE_VERSION = 1.0.2
 #
 # If you change this number, then you MUST bump PACKAGE_VERSION.
 NGINX_MODSECURITY_REF = 1.0.2
-
-# The libmodsecurity (https://github.com/SpiderLabs/ModSecurity)
-# Git commit that you want to compile ModSecurity-nginx against.
-#
-# If you change this number, then you MUST bump PACKAGE_VERSION.
-LIBMODSECURITY_REF = v3.0.6
 
 # The Nginx version that you want to compile ModSecurity-nginx against.
 # This must be the exact same version as the one installable via the
@@ -32,8 +26,8 @@ LIBMODSECURITY_REF = v3.0.6
 # - you MUST synchronize the corresponding numbers in spec/control.
 NGINX_VERSION = 1.18.0
 
-# If you've updated the package, but without updating MODSECURITY_REF,
-# LIBMODSECURITY_REF or NGINX_VERSION (that is, you did not update PACKAGE_VERSION),
+# If you've updated the package, but without updating NGINX_MODSECURITY_REF
+# or NGINX_VERSION (that is, you did not update PACKAGE_VERSION),
 # then you must bump this number.
 #
 # Only modify the number before the `~` part. Don't touch the text after
@@ -60,7 +54,7 @@ dev: $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc
 	cd $(PACKAGE_NAME)-$(PACKAGE_VERSION) && eatmydata dpkg-buildpackage -b -us -uc -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 clean:
-	rm -rf *.tar.gz *.xz *.git *.dsc *.buildinfo *.changes *.deb *.ddeb *.upload $(PACKAGE_NAME)-*
+	rm -rf *.tar.gz *.xz *.dsc *.buildinfo *.changes *.deb *.ddeb *.upload $(PACKAGE_NAME)-*
 
 
 $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).dsc: $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
@@ -73,7 +67,7 @@ $(PACKAGE_NAME)_$(PACKAGE_VERSION)-$(PACKAGE_REVISION).deb: $(PACKAGE_NAME)_$(PA
 	cd $(PACKAGE_NAME)-$(PACKAGE_VERSION) && eatmydata dpkg-buildpackage -b -us -uc -jauto $(DPKG_BUILDPACKAGE_ARGS)
 
 
-$(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz: ModSecurity-nginx-$(NGINX_MODSECURITY_REF).tar.gz nginx-$(NGINX_VERSION).tar.gz libmodsecurity.git/HEAD
+$(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz: ModSecurity-nginx-$(NGINX_MODSECURITY_REF).tar.gz nginx-$(NGINX_VERSION).tar.gz
 	rm -rf $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 	mkdir $(PACKAGE_NAME)-$(PACKAGE_VERSION)
 	mkdir $(PACKAGE_NAME)-$(PACKAGE_VERSION)/nginx
@@ -82,11 +76,6 @@ $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz: ModSecurity-nginx-$(NGINX_MODSEC
 		-xzf ModSecurity-nginx-$(NGINX_MODSECURITY_REF).tar.gz
 	tar -C $(PACKAGE_NAME)-$(PACKAGE_VERSION)/nginx --strip-components 1 \
 		-xzf nginx-$(NGINX_VERSION).tar.gz
-
-	git clone libmodsecurity.git $(PACKAGE_NAME)-$(PACKAGE_VERSION)/libmodsecurity
-	cd $(PACKAGE_NAME)-$(PACKAGE_VERSION)/libmodsecurity && git reset --hard $(LIBMODSECURITY_REF)
-	cd $(PACKAGE_NAME)-$(PACKAGE_VERSION)/libmodsecurity && git submodule update --init --recursive
-	rm -rf $(PACKAGE_NAME)-$(PACKAGE_VERSION)/libmodsecurity/.git
 
 	find $(PACKAGE_NAME)-$(PACKAGE_VERSION) -print0 | xargs -0 touch -d '2022-03-13 00:00:00 UTC'
 	tar -c $(PACKAGE_NAME)-$(PACKAGE_VERSION) | xz -zT 0 - > $(PACKAGE_NAME)_$(PACKAGE_VERSION).orig.tar.xz
@@ -98,6 +87,3 @@ ModSecurity-nginx-$(NGINX_MODSECURITY_REF).tar.gz:
 
 nginx-$(NGINX_VERSION).tar.gz:
 	wget https://nginx.org/download/nginx-$(NGINX_VERSION).tar.gz
-
-libmodsecurity.git/HEAD:
-	git clone --recurse-submodules https://github.com/SpiderLabs/ModSecurity.git libmodsecurity.git

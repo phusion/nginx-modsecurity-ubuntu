@@ -3,16 +3,16 @@ Section: httpd
 Priority: optional
 Maintainer: Hongli Lai <hongli@phusion.nl>
 Uploaders: Hongli Lai <hongli@phusion.nl>
-Build-Depends: debhelper (>= 9), autoconf, automake, apache2-dev,
+Build-Depends: debhelper (>= 10), autoconf, automake, apache2-dev,
  libpcre3-dev, libxml2-dev, pkg-config, libyajl-dev, zlib1g-dev,
- libcurl4-openssl-dev, libgeoip-dev, libssl-dev, quilt
-Standards-Version: 3.9.8.0
+ libcurl4-openssl-dev, libgeoip-dev, libssl-dev, quilt, libmodsecurity-dev
+Standards-Version: 4.1.3
 
 Package: libnginx-mod-http-modsecurity
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
-  nginx-common (>= 1.14.0),
-  nginx-common (<< 1.14.1)
+  nginx-common (>= 1.18.0),
+  nginx-common (<< 1.18.1)
 Suggests: modsecurity-crs
 Description: Tighten web applications security for Nginx
  Modsecurity is an Nginx module whose purpose is to tighten the Web

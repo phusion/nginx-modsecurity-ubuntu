@@ -7,5 +7,4 @@
 /*.buildinfo
 /*.changes
 /*.upload
-/*.git
 /libnginx-mod-http-modsecurity-*

@@ -9,17 +9,7 @@ debian_ldflags:=$(shell dpkg-buildflags --get LDFLAGS) -fPIC
 	dh $@ --with quilt
 
 override_dh_auto_configure:
-	cd libmodsecurity && ./build.sh
-	cd libmodsecurity && ./configure --disable-shared --disable-examples \
-		CFLAGS="$(debian_cflags)" \
-		CXXFLAGS="$(debian_cflags)" \
-		LDFLAGS="$(debian_ldflags)"
-	cd libmodsecurity/others && make
-	cd libmodsecurity/src && make
 	cd nginx && \
-		env MODSECURITY_INC=../libmodsecurity/headers \
-		MODSECURITY_LIB=../libmodsecurity/src/.libs \
-		NGX_IGNORE_RPATH=YES \
 		./configure \
 			--with-cc-opt="$(debian_cflags) $$(pkg-config --cflags libxml-2.0 geoip yajl libpcre libcurl apr-1) -I$$(apxs2 -q INCLUDEDIR) -Wno-error" \
 			--with-ld-opt="$(debian_ldflags)" \

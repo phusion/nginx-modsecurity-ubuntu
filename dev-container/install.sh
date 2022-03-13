@@ -6,7 +6,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt update
 apt install -y devscripts gdebi-core mc sudo build-essential python \
 	ccache debhelper quilt eatmydata nano xz-utils wget git \
-	autoconf automake apache2-dev \
+	autoconf automake apache2-dev libmodsecurity-dev \
 	libpcre3-dev libxml2-dev pkg-config libyajl-dev zlib1g-dev \
 	libcurl4-openssl-dev libgeoip-dev libssl-dev
 
