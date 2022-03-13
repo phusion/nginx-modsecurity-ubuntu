@@ -1,6 +1,6 @@
 # Ubuntu package for ModSecurity-Nginx
 
-This project contains the packaging specifications of [the ModSecurity Nginx module](https://github.com/SpiderLabs/ModSecurity-nginx) for Ubuntu 18.04. It packages ModSecurity-Nginx as a dynamic module.
+This project contains the packaging specifications of [the ModSecurity Nginx module](https://github.com/SpiderLabs/ModSecurity-nginx) for Ubuntu 20.04. It packages ModSecurity-Nginx as a dynamic module.
 
 **Table of contents:**
 
@@ -8,16 +8,16 @@ This project contains the packaging specifications of [the ModSecurity Nginx mod
 
 - [Installation through PPA](#installation-through-ppa)
 - [Building the package](#building-the-package)
-	- [On Ubuntu 18.04](#on-ubuntu-1804)
-	- [On other Linux distros, other Ubuntu versions or other OSes](#on-other-linux-distros-other-ubuntu-versions-or-other-oses)
+    - [On Ubuntu 20.04](#on-ubuntu-2004)
+    - [On other Linux distros, other Ubuntu versions or other OSes](#on-other-linux-distros-other-ubuntu-versions-or-other-oses)
 - [Development](#development)
-	- [Anatomy](#anatomy)
-	- [Workflow](#workflow)
-	- [Shortening the development cycle](#shortening-the-development-cycle)
-	- [Upgrading modsecurity-nginx, libmodsecurity and Nginx](#upgrading-modsecurity-nginx-libmodsecurity-and-nginx)
+    - [Anatomy](#anatomy)
+    - [Workflow](#workflow)
+    - [Shortening the development cycle](#shortening-the-development-cycle)
+    - [Upgrading modsecurity-nginx, libmodsecurity and Nginx](#upgrading-modsecurity-nginx-libmodsecurity-and-nginx)
 - [Maintenance and troubleshooting](#maintenance-and-troubleshooting)
-	- [When Ubuntu upgrades Nginx](#when-ubuntu-upgrades-nginx)
-	- [Releasing a package update](#releasing-a-package-update)
+    - [When Ubuntu upgrades Nginx](#when-ubuntu-upgrades-nginx)
+    - [Releasing a package update](#releasing-a-package-update)
 
 <!-- /MarkdownTOC -->
 
@@ -33,9 +33,9 @@ sudo apt install libnginx-mod-http-modsecurity
 
 ## Building the package
 
-You can build a package either on Ubuntu 18.04, or on any system that supports Docker Linux containers.
+You can build a package either on Ubuntu 20.04, or on any system that supports Docker Linux containers.
 
-### On Ubuntu 18.04
+### On Ubuntu 20.04
 
  1. Install Debian package building tools: `apt install devscripts eatmydata wget git`
  2. Run: `make`
@@ -46,20 +46,20 @@ If building fails then that is likely because you need to have some libraries in
 
 ### On other Linux distros, other Ubuntu versions or other OSes
 
- 1. Enter our Ubuntu 18.04 build environment Docker container: `./enter-docker.sh`
+ 1. Enter our Ubuntu 20.04 build environment Docker container: `./enter-dev-container.sh`
  2. Inside the container, run: `make`
 
 This will output a file `libnginx-mod-http-modsecurity_xxxx.deb`.
 
 ## Development
 
-This section describes how you should approach making changes to the packaging specifications. Just like when building a package, you can do development either on Ubuntu 18.04, or on any system that supports Docker Linux containers.
+This section describes how you should approach making changes to the packaging specifications. Just like when building a package, you can do development either on Ubuntu 20.04, or on any system that supports Docker Linux containers.
 
 ### Anatomy
 
  * The `spec/` directory contains the Debian packaging specifications (that is, the files that are usually found within the `debian/` directory).
  * The `Makefile` is used to download source files and build the package. It also specifies which version of libmodsecurity and Nginx to compile against.
- * `build-docker.sh`, `enter-docker.sh` and `docker-env/` are related to the Docker-based build environment.
+ * `build-dev-container.sh`, `enter-dev-container.sh` and `dev-container/` are related to the Docker-based development/build environment.
 
 ### Workflow
 
@@ -111,7 +111,7 @@ You are then ready to upload the package to your preferred APT repository. The e
 
  1. If using Docker, import your GPG private key into the Docker container:
 
-     a. On your host OS, export your GPG private key to a file, located inside the same directory as enter-docker.sh.
+     a. On your host OS, export your GPG private key to a file, located inside the same directory as enter-dev-container.sh.
      b. Inside the container, run: `gpg --import yourkeyfile.asc`
      c. Inside the container, run: `gpg --edit-key yourkeyemail@host.com`
      d. Inside the GPG prompt, run: `trust`. Select "ultimate". Then run: `quit`.

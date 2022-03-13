@@ -1,3 +1,11 @@
+libnginx-mod-http-modsecurity (1.0.2-1~focal1) focal; urgency=medium
+
+  * Upgrade to Nginx 1.18.0, same as what's shipped with Ubuntu 20.04.
+  * Upgrade to libmodsecurity 3.0.6.
+  * Upgrade to nginx-modsecurity 1.0.2.
+
+ -- Hongli Lai <honglilai@gmail.com>  Sat, 28 Apr 2018 11:14:26 +0000
+
 libnginx-mod-http-modsecurity (1.0.1-1~bionic1) bionic; urgency=medium
 
   * Upgrade to Nginx 1.14.0, same as what's shipped with Ubuntu 18.04 final.

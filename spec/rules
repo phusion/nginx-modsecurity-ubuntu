@@ -1,24 +1,47 @@
 #!/usr/bin/make -f
+export DH_VERBOSE=1
+
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+debian_cflags:=$(shell dpkg-buildflags --get CFLAGS) -fPIC $(shell dpkg-buildflags --get CPPFLAGS)
+debian_ldflags:=$(shell dpkg-buildflags --get LDFLAGS) -fPIC
 
 %:
 	dh $@ --with quilt
 
 override_dh_auto_configure:
 	cd libmodsecurity && ./build.sh
-	cd libmodsecurity && ./configure --disable-shared --disable-examples CFLAGS='-O2 -fPIC' CXXFLAGS='-O2 -fPIC'
+	cd libmodsecurity && ./configure --disable-shared --disable-examples \
+		CFLAGS="$(debian_cflags)" \
+		CXXFLAGS="$(debian_cflags)" \
+		LDFLAGS="$(debian_ldflags)"
 	cd libmodsecurity/others && make
 	cd libmodsecurity/src && make
 	cd nginx && \
 		env MODSECURITY_INC=../libmodsecurity/headers \
 		MODSECURITY_LIB=../libmodsecurity/src/.libs \
 		NGX_IGNORE_RPATH=YES \
-		./configure --with-pcre-jit --with-threads --with-ipv6 \
-		--with-http_gzip_static_module --with-http_gunzip_module \
-		--with-http_v2_module --with-http_dav_module \
-		--with-http_realip_module --with-http_geoip_module=dynamic \
-		--with-http_ssl_module --http-proxy-temp-path=/var/lib/nginx/proxy \
-		--with-cc-opt="$$(pkg-config --cflags libxml-2.0 geoip yajl libpcre libcurl apr-1) -I$$(apxs2 -q INCLUDEDIR) -Wno-error" \
-		--add-dynamic-module="$$(pwd)/.."
+		./configure \
+			--with-cc-opt="$(debian_cflags) $$(pkg-config --cflags libxml-2.0 geoip yajl libpcre libcurl apr-1) -I$$(apxs2 -q INCLUDEDIR) -Wno-error" \
+			--with-ld-opt="$(debian_ldflags)" \
+			--prefix=/usr/share/nginx \
+			--conf-path=/etc/nginx/nginx.conf \
+			--http-log-path=/var/log/nginx/access.log \
+			--error-log-path=/var/log/nginx/error.log \
+			--lock-path=/var/lock/nginx.lock \
+			--pid-path=/run/nginx.pid \
+			--modules-path=/usr/lib/nginx/modules \
+			--http-client-body-temp-path=/var/lib/nginx/body \
+			--http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+			--http-proxy-temp-path=/var/lib/nginx/proxy \
+			--http-scgi-temp-path=/var/lib/nginx/scgi \
+			--http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
+			--with-debug \
+			--with-compat \
+			--with-pcre-jit \
+			--with-http_ssl_module \
+			--with-http_v2_module \
+			--with-threads \
+			--add-dynamic-module="$$(pwd)/.."
 	echo '#define NGX_HTTP_HEADERS 1' >> nginx/objs/ngx_auto_config.h
 
 override_dh_auto_build:

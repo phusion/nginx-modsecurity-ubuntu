@@ -1,12 +1,23 @@
 #!/bin/bash
 set -ex
 
-apt-get update
-apt-get install -y devscripts gdebi-core mc sudo bindfs build-essential python \
+export DEBIAN_FRONTEND=noninteractive
+
+apt update
+apt install -y devscripts gdebi-core mc sudo build-essential python \
 	ccache debhelper quilt eatmydata nano xz-utils wget git \
 	autoconf automake apache2-dev \
 	libpcre3-dev libxml2-dev pkg-config libyajl-dev zlib1g-dev \
 	libcurl4-openssl-dev libgeoip-dev libssl-dev
+
+ln -s ../../bin/ccache /usr/lib/ccache/cc
+ln -s ../../bin/ccache /usr/lib/ccache/c++
+
+wget -O matchhostfsowner.gz \
+	https://github.com/FooBarWidget/matchhostfsowner/releases/download/v0.9.8/matchhostfsowner-0.9.8-x86_64-linux.gz
+gunzip matchhostfsowner
+chmod +x,+s matchhostfsowner
+mv matchhostfsowner /sbin/
 
 echo 'alias ls="ls --color -Fh"' >> /etc/bash.bashrc
 echo 'alias dir="ls -l"' >> /etc/bash.bashrc
@@ -22,8 +33,6 @@ cp /nginx_modsecurity_build/gpg.conf /home/app/.gnupg/gpg.conf
 chown -R app: /home/app/.gnupg
 chmod 700 /home/app/.gnupg
 
-cp /nginx_modsecurity_build/inithostmount.sh /sbin/inithostmount
-cp /nginx_modsecurity_build/initenv.sh /sbin/initenv
-
+apt clean
 rm -rf /tmp/* /var/tmp/* /var/lib/apt/lists/*
 rm -rf /nginx_modsecurity_build
